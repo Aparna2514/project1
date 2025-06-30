@@ -25,7 +25,9 @@ public:
     void showAllProducts() const;
     void showLowStock(int threshold = 5) const;
     void displayProductForCustomer() const;
-    //std::vector<Product> getLowStockProducts(int threshold) const;
+    void showReorderAlerts() const; // added for auto alert
+    
+
 };
 
 

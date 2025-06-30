@@ -115,6 +115,7 @@ void Admin::restockProduct() {
     }
 }
 
+// modified
 void Admin::viewLowStockAlerts() {
     int threshold = 5;  // Default value, or take user input
     inventory.showLowStock(threshold);  // ✅ fixed
