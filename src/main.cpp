@@ -60,7 +60,6 @@ void customerMenu() {
 void adminAccess() {
     Admin admin;
     if (admin.login()) {
-        inventory.showReorderAlerts(); //added for auto alert
         admin.showMenu();  // Full admin dashboard
     } else {
         cout << "❌ Login failed. Returning to main menu.\n";

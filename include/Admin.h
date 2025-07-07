@@ -11,7 +11,7 @@ private:
     static void addProduct();
     static void deleteProduct();
     static void restockProduct();
-    static void viewLowStockAlerts(); // modified to change from alerts.txt
+    static void viewLowStockAlerts();
     static void viewCustomers();
     static void viewOrders();
 };
