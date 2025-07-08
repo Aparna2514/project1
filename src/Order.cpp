@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <iomanip> // for iomanip
 #include <ctime>
 
 // Default constructor
@@ -33,21 +34,35 @@ double Order::getTotalAmount(const Inventory& inventory) const {
     return total;
 }
 
-// Save order to file
+//  modified to Save order to file to change order.txt
 void Order::saveToFile(const std::string& filename) const {
     std::ofstream out(filename, std::ios::app);
     if (!out) {
         std::cerr << "Failed to open order file.\n";
         return;
     }
+
     out << orderId << "," << customerId << "," << date << ",";
+
     for (size_t i = 0; i < items.size(); ++i) {
-        out << items[i].first << ":" << items[i].second;
+        int pid = items[i].first;
+        int qty = items[i].second;
+
+        Product* product = Inventory::getProductStaticById(pid); // 👈 We'll define this helper below
+        double base = product->getPrice() * qty;
+        double afterDiscount = base - (base * product->getDiscountPercent() / 100);
+        double finalPrice = afterDiscount + (afterDiscount * product->getGstPercent() / 100);
+
+        out << pid << ":" << qty << ":" << std::fixed << std::setprecision(2) << finalPrice;
+
         if (i != items.size() - 1) out << ";";
     }
+
     out << "\n";
     out.close();
 }
+
+
 
 // Generate unique order ID (dummy for now, utility logic later)
 int Order::generateOrderId() {
@@ -92,6 +107,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
 
     Order newOrder(oid, customer.getCustomerId(), date, orderItems);
     newOrder.saveToFile(); // saves to orders.txt
+    generateInvoice(newOrder, inventory, customer);
     std::cout << "Order placed successfully. Order ID: " << oid << "\n";
     return newOrder;
 }
@@ -99,3 +115,5 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
 void Order::setCustomer(const Customer& customer) {
     this->customerId = customer.getCustomerId();
 }
+
+
