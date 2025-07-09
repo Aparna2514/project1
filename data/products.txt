@@ -1,1 +1,1 @@
-1002,banana,fruit,Indian,Yellowy ,12,86,0,0,12
+1002,banana,fruit,Indian,Yellowy ,12,60,0,0,12

@@ -28,7 +28,7 @@ public:
     //std::vector<Product> getLowStockProducts(int threshold) const;
 
     // added as helper function for order.txt
-    static Product* getProductStaticById(int productId);
+    //static Product* getProductStaticById(int productId);
 
 };
 

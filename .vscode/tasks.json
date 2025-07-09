@@ -7,17 +7,19 @@
       "command": "g++",
       "args": [
         "-std=c++17",
-        "-Iinclude",             // Include header files from include/
-        "src/*.cpp",             // Compile all .cpp files
+        "-Iinclude",              // Include headers from include/
+        "-Ianalytics",            // Include headers from analytics/
+        "src/*.cpp",              // Compile all .cpp files in src/
+        "analytics/Analytics.cpp",// Compile the new Analytics module
         "-o",
-        "app.exe"                // Output file
+        "app.exe"                 // Output executable
       ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "problemMatcher": ["$gcc"],
-      "detail": "Compile all C++ source files in src/ directory"
+      "detail": "Compile all C++ source files including analytics module"
     }
   ]
 }

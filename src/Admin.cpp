@@ -4,6 +4,7 @@
 #include "Customer.h"
 #include "Order.h"
 #include "Utility.h"
+#include "../analytics/Analytics.h"
 
 #include <iostream>
 #include <fstream>
@@ -39,6 +40,7 @@ void Admin::showMenu() {
         cout << "5. View Low Stock Alerts\n";
         cout << "6. View All Customers\n";
         cout << "7. View All Orders\n";
+        cout << "8. View Analytics & Reports\n";
         cout << "0. Logout\n";
         cout << "Enter choice: ";
         cin >> choice;
@@ -51,6 +53,7 @@ void Admin::showMenu() {
             case 5: viewLowStockAlerts(); break;
             case 6: viewCustomers(); break;
             case 7: viewOrders(); break;
+            case 8: viewAnalyticsReports(); break;
             case 0: cout << "Logging out...\n"; break;
             default: cout << "❌ Invalid choice.\n"; break;
         }
@@ -137,5 +140,29 @@ void Admin::viewOrders() {
     while (getline(file, line)) {
         replace(line.begin(), line.end(), '|', ' ');
         cout << line << "\n";
+    }
+}
+
+// 8th feature
+void Admin::viewAnalyticsReports() {
+    int choice;
+    cout << "\n📈 Analytics & Reports:\n";
+    cout << "1. Sales Report (Daily)\n";
+    cout << "2. Sales Report (Weekly)\n";
+    cout << "3. Sales Report (Monthly)\n";
+    cout << "4. Most/Least Ordered Products\n";
+    cout << "5. Customer Order Trends\n";
+    cout << "0. Back to Admin Menu\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1: generateSalesReport("daily"); break;
+        case 2: generateSalesReport("weekly"); break;
+        case 3: generateSalesReport("monthly"); break;
+        case 4: showMostAndLeastOrderedProducts(); break;
+        case 5: showCustomerOrderTrends(); break;
+        case 0: return;
+        default: cout << "❌ Invalid choice.\n";
     }
 }

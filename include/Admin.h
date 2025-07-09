@@ -14,6 +14,7 @@ private:
     static void viewLowStockAlerts();
     static void viewCustomers();
     static void viewOrders();
+    static void viewAnalyticsReports(); 
 };
 
 #endif // ADMIN_H

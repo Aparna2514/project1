@@ -33,7 +33,8 @@ public:
     double getTotalAmount(const Inventory& inventory) const;
 
     // File I/O
-    void saveToFile(const std::string& filename = "data/orders.txt") const;
+ void saveToFile(const std::string& filename, const Inventory& inventory) const;
+
 
     // Static
     static int generateOrderId();
@@ -41,3 +42,5 @@ public:
 };
 
 #endif // ORDER_H
+
+
