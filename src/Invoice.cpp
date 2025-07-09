@@ -76,3 +76,4 @@ void Invoice::generateInvoice(const Order& order, const Inventory& inventory, co
     system(openCommand.c_str());
 
 }
+

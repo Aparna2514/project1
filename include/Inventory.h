@@ -25,8 +25,10 @@ public:
     void showAllProducts() const;
     void showLowStock(int threshold = 5) const;
     void displayProductForCustomer() const;
-    void showReorderAlerts() const; // added for auto alert
-    
+    //std::vector<Product> getLowStockProducts(int threshold) const;
+
+    // added as helper function for order.txt
+    //static Product* getProductStaticById(int productId);
 
 };
 

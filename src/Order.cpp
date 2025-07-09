@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <iomanip> // for iomanip
 #include <ctime>
 
 // Default constructor
@@ -33,28 +34,42 @@ double Order::getTotalAmount(const Inventory& inventory) const {
     return total;
 }
 
-// Save order to file
-void Order::saveToFile(const std::string& filename) const {
+// Save order to file (explicit path provided by caller)
+void Order::saveToFile(const std::string& filename, const Inventory& inventory) const {
     std::ofstream out(filename, std::ios::app);
     if (!out) {
         std::cerr << "Failed to open order file.\n";
         return;
     }
+
     out << orderId << "," << customerId << "," << date << ",";
+
     for (size_t i = 0; i < items.size(); ++i) {
-        out << items[i].first << ":" << items[i].second;
+        int pid = items[i].first;
+        int qty = items[i].second;
+
+        Product* product = inventory.getProductById(pid);
+        if (!product) continue;
+
+        double base = product->getPrice() * qty;
+        double afterDiscount = base - (base * product->getDiscountPercent() / 100);
+        double finalPrice = afterDiscount + (afterDiscount * product->getGstPercent() / 100);
+
+        out << pid << ":" << qty << ":" << std::fixed << std::setprecision(2) << finalPrice;
+
         if (i != items.size() - 1) out << ";";
     }
+
     out << "\n";
     out.close();
 }
 
-// Generate unique order ID (dummy for now, utility logic later)
+// Generate unique order ID
 int Order::generateOrderId() {
     return Utility::generateID();
 }
 
-// Place order (basic input simulation here)
+// Place order from user input and save to file
 Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     std::vector<std::pair<int, int>> orderItems;
     char more = 'y';
@@ -91,7 +106,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     int oid = generateOrderId();
 
     Order newOrder(oid, customer.getCustomerId(), date, orderItems);
-    newOrder.saveToFile(); // saves to orders.txt
+    newOrder.saveToFile("data/orders.txt", inventory);  // ✅ Explicit file path
     std::cout << "Order placed successfully. Order ID: " << oid << "\n";
     return newOrder;
 }

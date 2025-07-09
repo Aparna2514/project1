@@ -3,7 +3,6 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
-#include <ctime>
 
 using namespace std;
 
@@ -21,7 +20,6 @@ void Inventory::loadFromFile() {
 
     string line;
     while (getline(file, line)) {
-        if (line.empty()) continue;
         stringstream ss(line);
         int id, quantity, reorderThreshold;
         double price, discount, gst;
@@ -166,29 +164,4 @@ void Inventory::displayProductForCustomer() const {
              << setw(10) << p.getPrice() << "\n";
     }
 }
-
-// function for auto alert 
-
-void Inventory::showReorderAlerts() const {
-    bool alertShown = false;
-
-    for (const auto& p : products) {
-        if (p.getQuantity() < p.getReorderThreshold()) {
-            if (!alertShown) {
-                cout << "\n🔔 LOW STOCK ALERTS:\n";
-                alertShown = true;
-            }
-            cout << "   → " << p.getName()
-                 << " (ID: " << p.getProductId() << ") "
-                 << "is below threshold. Current: "
-                 << p.getQuantity() << ", Threshold: "
-                 << p.getReorderThreshold() << "\n";
-        }
-    }
-
-    if (!alertShown) {
-        cout << "\n✅ All products are above their reorder thresholds.\n";
-    }
-}
-
 
