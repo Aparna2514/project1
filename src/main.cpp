@@ -23,7 +23,7 @@ void customerMenu() {
         currentCustomer = currentCustomer.registerCustomer();
         isRegistered = true;
     } else {
-        currentCustomer = Customer(0, "Guest", "guest@example.com", "N/A", "0000000000");
+       currentCustomer = Customer(0, "Guest", "guest@example.com", "N/A", "0000000000", "000000");
     }
 
     do {

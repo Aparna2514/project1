@@ -10,12 +10,14 @@ private:
     std::string email;
     std::string address;
     std::string phone;
+    std::string pincode;
 
 public:
     // Constructors
     Customer() = default;
     Customer(int id, const std::string& name, const std::string& email,
-             const std::string& address, const std::string& phone);
+             const std::string& address, const std::string& phone,
+             const std::string& pincode);
 
     // Getters
     int getCustomerId() const;
@@ -23,6 +25,7 @@ public:
     std::string getEmail() const;
     std::string getAddress() const;
     std::string getPhone() const;
+    std::string getPincode() const;
 
     // File operations
     void saveToFile(const std::string& filename = "data/customers.txt") const;
@@ -34,4 +37,3 @@ public:
 };
 
 #endif // CUSTOMER_H
-
