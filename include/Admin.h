@@ -15,6 +15,11 @@ private:
     static void viewCustomers();
     static void viewOrders();
     static void viewAnalyticsReports(); 
+    static void manageWarehouses();         
+    static void registerWarehouse();        
+    static void deleteWarehouse();          
+    static void feedWarehouseInventory();   
+    static void viewAllWarehouses();      
 };
 
 #endif // ADMIN_H

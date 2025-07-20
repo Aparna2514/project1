@@ -4,6 +4,7 @@
 #include "Customer.h"
 #include "Order.h"
 #include "Utility.h"
+#include "Warehouse.h"
 #include "../analytics/Analytics.h"
 
 #include <iostream>
@@ -18,7 +19,7 @@ static Inventory inventory;
 
 bool Admin::login() {
     string username, password;
-    cout << "🔐 Admin Login\n";
+    cout << "Admin Login\n";
     cout << "Username: ";
     cin >> username;
     cout << "Password: ";
@@ -32,7 +33,7 @@ void Admin::showMenu() {
 
     int choice;
     do {
-        cout << "\n📋 Admin Dashboard:\n";
+        cout << "\n Admin Dashboard:\n";
         cout << "1. View All Products\n";
         cout << "2. Add Product\n";
         cout << "3. Delete Product\n";
@@ -41,6 +42,7 @@ void Admin::showMenu() {
         cout << "6. View All Customers\n";
         cout << "7. View All Orders\n";
         cout << "8. View Analytics & Reports\n";
+        cout << "9. Manage Warehouses\n";
         cout << "0. Logout\n";
         cout << "Enter choice: ";
         cin >> choice;
@@ -54,14 +56,15 @@ void Admin::showMenu() {
             case 6: viewCustomers(); break;
             case 7: viewOrders(); break;
             case 8: viewAnalyticsReports(); break;
+            case 9: manageWarehouses(); break;
             case 0: cout << "Logging out...\n"; break;
-            default: cout << "❌ Invalid choice.\n"; break;
+            default: cout << "Invalid choice.\n"; break;
         }
     } while (choice != 0);
 }
 
 void Admin::viewAllProducts() {
-    cout << "\n📦 Product List:\n";
+    cout << "\n Product List:\n";
     inventory.showAllProducts();  // ✅ fixed
 }
 
@@ -87,7 +90,7 @@ void Admin::addProduct() {
     inventory.addProduct(newProduct);
     inventory.saveToFile();
 
-    cout << "✅ Product added successfully.\n";
+    cout << " Product added successfully.\n";
 }
 
 void Admin::deleteProduct() {
@@ -97,9 +100,9 @@ void Admin::deleteProduct() {
 
     if (inventory.removeProduct(id)) {
         inventory.saveToFile();
-        cout << "✅ Product deleted.\n";
+        cout << " Product deleted.\n";
     } else {
-        cout << "❌ Product not found.\n";
+        cout << " Product not found.\n";
     }
 }
 
@@ -112,9 +115,9 @@ void Admin::restockProduct() {
 
     if (inventory.updateStock(id, quantity)) {
         inventory.saveToFile();
-        cout << "✅ Stock updated.\n";
+        cout << " Stock updated.\n";
     } else {
-        cout << "❌ Product not found.\n";
+        cout << "Product not found.\n";
     }
 }
 
@@ -136,7 +139,7 @@ void Admin::viewCustomers() {
 void Admin::viewOrders() {
     ifstream file("data/orders.txt");
     string line;
-    cout << "\n📦 All Orders:\n";
+    cout << "\n All Orders:\n";
     while (getline(file, line)) {
         replace(line.begin(), line.end(), '|', ' ');
         cout << line << "\n";
@@ -146,7 +149,7 @@ void Admin::viewOrders() {
 // 8th feature
 void Admin::viewAnalyticsReports() {
     int choice;
-    cout << "\n📈 Analytics & Reports:\n";
+    cout << "\n Analytics & Reports:\n";
     cout << "1. Sales Report (Daily)\n";
     cout << "2. Sales Report (Weekly)\n";
     cout << "3. Sales Report (Monthly)\n";
@@ -163,6 +166,51 @@ void Admin::viewAnalyticsReports() {
         case 4: showMostAndLeastOrderedProducts(); break;
         case 5: showCustomerOrderTrends(); break;
         case 0: return;
-        default: cout << "❌ Invalid choice.\n";
+        default: cout << " Invalid choice.\n";
     }
+}
+
+void Admin::manageWarehouses() {
+    int choice;
+    do {
+        cout << "\n🏭 Warehouse Management:\n";
+        cout << "1. Register New Warehouse\n";
+        cout << "2. Delete Warehouse\n";
+        cout << "3. Feed/Update Inventory in Warehouse\n";
+        cout << "4. View All Warehouses\n";
+        cout << "0. Back to Admin Menu\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: registerWarehouse(); break;
+            case 2: deleteWarehouse(); break;
+            case 3: feedWarehouseInventory(); break;
+            case 4: viewAllWarehouses(); break;
+            case 0: return;
+            default: cout << "❌ Invalid choice.\n";
+        }
+    } while (choice != 0);
+}
+
+void Admin::registerWarehouse() {
+    Warehouse w;
+    w.registerWarehouse();
+}
+
+void Admin::deleteWarehouse() {
+    string id;
+    cout << "Enter Warehouse ID to delete: ";
+    cin >> id;
+    Warehouse w;
+    w.deleteWarehouse(id);
+}
+
+void Admin::feedWarehouseInventory() {
+    Warehouse w;
+    w.feedInventory();
+}
+
+void Admin::viewAllWarehouses() {
+    Warehouse::showAllWarehouses();
 }
