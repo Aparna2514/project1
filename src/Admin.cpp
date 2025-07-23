@@ -173,7 +173,7 @@ void Admin::viewAnalyticsReports() {
 void Admin::manageWarehouses() {
     int choice;
     do {
-        cout << "\n🏭 Warehouse Management:\n";
+        cout << "\n Warehouse Management:\n";
         cout << "1. Register New Warehouse\n";
         cout << "2. Delete Warehouse\n";
         cout << "3. Feed/Update Inventory in Warehouse\n";
@@ -188,7 +188,7 @@ void Admin::manageWarehouses() {
             case 3: feedWarehouseInventory(); break;
             case 4: viewAllWarehouses(); break;
             case 0: return;
-            default: cout << "❌ Invalid choice.\n";
+            default: cout << " Invalid choice.\n";
         }
     } while (choice != 0);
 }

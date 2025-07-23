@@ -29,7 +29,7 @@ void Customer::saveToFile(const std::string& filename) const {
                 << address << "|" << phone << "|" << pincode << "\n";
         outFile.close();
     } else {
-        std::cerr << "❌ Unable to open " << filename << " to save customer.\n";
+        std::cerr << " Unable to open " << filename << " to save customer.\n";
     }
 }
 
@@ -51,7 +51,7 @@ Customer Customer::loadFromFile(int id, const std::string& filename) {
         }
     }
 
-    std::cerr << "❌ Customer with ID " << id << " not found.\n";
+    std::cerr << " Customer with ID " << id << " not found.\n";
     return Customer(); // empty/default
 }
 
@@ -73,7 +73,7 @@ bool Customer::exists(int id, const std::string& filename) {
 Customer Customer::registerCustomer() {
     std::string name, email, address, phone, pincode;
 
-    std::cout << "\n📝 Register New Customer:\n";
+    std::cout << "\n Register New Customer:\n";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::cout << "Enter Name: ";
@@ -96,7 +96,7 @@ Customer Customer::registerCustomer() {
         if (std::regex_match(pincode, std::regex("^[0-9]{6}$"))) {
             break;
         } else {
-            std::cout << "❌ Invalid pincode. Please enter exactly 6 digits.\n";
+            std::cout << "Invalid pincode. Please enter exactly 6 digits.\n";
         }
     }
 
@@ -105,7 +105,7 @@ Customer Customer::registerCustomer() {
     Customer newCustomer(newId, name, email, address, phone, pincode);
     newCustomer.saveToFile();
 
-    std::cout << "✅ Customer registered successfully! Assigned ID: " << newId << "\n";
+    std::cout << " Customer registered successfully! Assigned ID: " << newId << "\n";
 
     return newCustomer;
 }

@@ -14,6 +14,9 @@ private:
     int customerId;
     std::string date;
     std::vector<std::pair<int, int>> items; // {productId, quantity}
+    std::string warehouseId;
+    std::string warehousePincode;
+    std::string customerPincode;
 
 public:
     Order();
@@ -27,14 +30,13 @@ public:
     std::vector<std::pair<int, int>> getItems() const;
 
     // Setters
-    void setCustomer(const Customer& customer); // ✅ NEW
+    void setCustomer(const Customer& customer);
 
     // Computation
     double getTotalAmount(const Inventory& inventory) const;
 
     // File I/O
- void saveToFile(const std::string& filename, const Inventory& inventory) const;
-
+    void saveToFile(const std::string& filename, const Inventory& inventory) const;
 
     // Static
     static int generateOrderId();
@@ -42,5 +44,3 @@ public:
 };
 
 #endif // ORDER_H
-
-

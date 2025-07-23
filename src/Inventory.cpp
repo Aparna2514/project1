@@ -143,7 +143,7 @@ void Inventory::showAllProducts() const {
 }
 
 void Inventory::showLowStock(int threshold) const {
-    cout << "\n⚠️  Low Stock Products (Below " << threshold << "):\n";
+    cout << "\n Low Stock Products (Below " << threshold << "):\n";
     for (const auto& p : products) {
         if (p.getQuantity() < threshold) {
             cout << " - " << p.getName() << " (ID: " << p.getProductId()
@@ -153,7 +153,7 @@ void Inventory::showLowStock(int threshold) const {
 }
 
 void Inventory::displayProductForCustomer() const {
-    cout << "\n🛍️  Available Products for Customers:\n";
+    cout << "\n  Available Products for Customers:\n";
     cout << left << setw(6) << "ID" << setw(20) << "Name"
          << setw(15) << "Brand" << setw(10) << "Price" << "\n";
     cout << "-----------------------------------------------------------\n";
