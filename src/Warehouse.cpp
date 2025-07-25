@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <filesystem>
+
 using namespace std;
 
 Warehouse::Warehouse() {}
@@ -121,7 +122,6 @@ void Warehouse::feedInventory() {
 
     auto [name, price] = fetchProductDetails(prodID);
 
-    // Check if product already exists in warehouse file
     ifstream in(file);
     ofstream temp("data/temp.txt");
     string line;
@@ -162,4 +162,21 @@ void Warehouse::showAllWarehouses() {
         cout << line << endl;
     }
     cout << "-------------------------------------------\n";
+}
+
+// ===== Getters used by ProximityManager =====
+string Warehouse::getID() const {
+    return warehouseID;
+}
+
+string Warehouse::getPincode() const {
+    return pincode;
+}
+
+string Warehouse::getAddress() const {
+    return exactAddress;
+}
+
+string Warehouse::getStatus() const {
+    return status;
 }

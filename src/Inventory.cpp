@@ -21,7 +21,7 @@ void Inventory::loadFromFile() {
     string line;
     while (getline(file, line)) {
         stringstream ss(line);
-        int id, quantity, reorderThreshold;
+        int id ;
         double price, discount, gst;
         string name, category, brand, description;
 
@@ -31,12 +31,12 @@ void Inventory::loadFromFile() {
         getline(ss, brand, ',');
         getline(ss, description, ',');
         getline(ss, line, ','); price = stod(line);
-        getline(ss, line, ','); quantity = stoi(line);
+        //getline(ss, line, ','); quantity = stoi(line);
         getline(ss, line, ','); discount = stod(line);
         getline(ss, line, ','); gst = stod(line);
-        getline(ss, line, ','); reorderThreshold = stoi(line);
+        //getline(ss, line, ','); reorderThreshold = stoi(line);
 
-        Product p(id, name, category, brand, description, price, quantity, discount, gst, reorderThreshold);
+        Product p(id, name, category, brand, description, price,  discount, gst);
         products.push_back(p);
     }
 
@@ -57,10 +57,10 @@ void Inventory::saveToFile() const {
              << p.getBrand() << ","
              << p.getDescription() << ","
              << p.getPrice() << ","
-             << p.getQuantity() << ","
+             //<< p.getQuantity() << ","
              << p.getDiscountPercent() << ","
-             << p.getGstPercent() << ","
-             << p.getReorderThreshold() << "\n";
+             << p.getGstPercent() ;
+             //<< p.getReorderThreshold() << "\n";
     }
 
     file.close();
@@ -101,7 +101,7 @@ vector<Product> Inventory::searchByName(const string& name) const {
     return results;
 }
 
-bool Inventory::updateStock(int productId, int quantityChange) {
+/*bool Inventory::updateStock(int productId, int quantityChange) {
      Product* p = getProductById(productId);
     if (p) {
         int currentQty = p->getQuantity();
@@ -111,7 +111,7 @@ bool Inventory::updateStock(int productId, int quantityChange) {
         return true;
     }
     return false;
-}
+}*/
 
 void Inventory::showAllProducts() const {
     cout << left << setw(6) << "ID"
@@ -120,10 +120,10 @@ void Inventory::showAllProducts() const {
          << setw(12) << "Brand"
          << setw(20) << "Description"
          << setw(10) << "Price"
-         << setw(8) << "Qty"
+        // << setw(8) << "Qty"
          << setw(10) << "Discount(%)"
-         << setw(8) << "GST(%)"
-         << setw(10) << "Reorder" << "\n";
+         << setw(8) << "GST(%)"<< "\n";
+        // << setw(10) << "Reorder" << "\n";
 
     cout << string(124, '-') << "\n";
 
@@ -134,15 +134,15 @@ void Inventory::showAllProducts() const {
              << setw(12) << p.getBrand()
              << setw(20) << p.getDescription()
              << setw(10) << p.getPrice()
-             << setw(8) << p.getQuantity()
+            // << setw(8) << p.getQuantity()
              << setw(10) << p.getDiscountPercent()
              << setw(8) << p.getGstPercent()
-             << setw(10) << p.getReorderThreshold()
+            // << setw(10) << p.getReorderThreshold()
              << "\n";
     }
 }
 
-void Inventory::showLowStock(int threshold) const {
+/*void Inventory::showLowStock(int threshold) const {
     cout << "\n Low Stock Products (Below " << threshold << "):\n";
     for (const auto& p : products) {
         if (p.getQuantity() < threshold) {
@@ -150,7 +150,7 @@ void Inventory::showLowStock(int threshold) const {
                  << ", Qty: " << p.getQuantity() << ")\n";
         }
     }
-}
+}*/
 
 void Inventory::displayProductForCustomer() const {
     cout << "\n  Available Products for Customers:\n";

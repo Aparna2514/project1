@@ -43,14 +43,14 @@ void customerMenu() {
                 Order order = order.placeOrder(currentCustomer, inventory);
                 Invoice invoice;
                 invoice.generateInvoice(order, inventory, currentCustomer);
-                cout << "✅ Order placed successfully. Invoice generated!\n";
+                cout << " Order placed successfully. Invoice generated!\n";
                 break;
             }
             case 3:
                 cout << "Returning to Main Menu...\n";
                 break;
             default:
-                cout << "❌ Invalid choice.\n";
+                cout << " Invalid choice.\n";
                 break;
         }
     } while (choice != 3);
@@ -62,7 +62,7 @@ void adminAccess() {
     if (admin.login()) {
         admin.showMenu();  // Full admin dashboard
     } else {
-        cout << "❌ Login failed. Returning to main menu.\n";
+        cout << " Login failed. Returning to main menu.\n";
     }
 }
 
@@ -71,7 +71,7 @@ int main() {
 
     int choice;
     do {
-        cout << "\n=== 🏭 Supply Chain Management System ===\n";
+        cout << "\n===  Supply Chain Management System ===\n";
         cout << "1. Admin Login\n";
         cout << "2. Customer Access\n";
         cout << "3. Exit\n";
@@ -83,7 +83,7 @@ int main() {
             //modified for solving inconsistecy in customer data
             case 2: inventory.loadFromFile(); customerMenu(); break;
             case 3: cout << "Exiting system. Goodbye!\n"; break;
-            default: cout << "❌ Invalid option.\n"; break;
+            default: cout << " Invalid option.\n"; break;
         }
 
     } while (choice != 3);

@@ -37,8 +37,8 @@ void Admin::showMenu() {
         cout << "1. View All Products\n";
         cout << "2. Add Product\n";
         cout << "3. Delete Product\n";
-        cout << "4. Restock Product\n";
-        cout << "5. View Low Stock Alerts\n";
+        //cout << "4. Restock Product\n";
+        //cout << "5. View Low Stock Alerts\n";
         cout << "6. View All Customers\n";
         cout << "7. View All Orders\n";
         cout << "8. View Analytics & Reports\n";
@@ -51,8 +51,8 @@ void Admin::showMenu() {
             case 1: viewAllProducts(); break;
             case 2: addProduct(); break;
             case 3: deleteProduct(); break;
-            case 4: restockProduct(); break;
-            case 5: viewLowStockAlerts(); break;
+            //case 4: restockProduct(); break;
+            //case 5: viewLowStockAlerts(); break;
             case 6: viewCustomers(); break;
             case 7: viewOrders(); break;
             case 8: viewAnalyticsReports(); break;
@@ -65,14 +65,14 @@ void Admin::showMenu() {
 
 void Admin::viewAllProducts() {
     cout << "\n Product List:\n";
-    inventory.showAllProducts();  // ✅ fixed
+    inventory.showAllProducts();  //  fixed
 }
 
 void Admin::addProduct() {
     int id = Utility::generateID();
     string name, category, brand, description;
     double price, discount, gst;
-    int quantity, threshold;
+    //int quantity, threshold;
 
     cin.ignore();
     cout << "Enter product name: "; getline(cin, name);
@@ -80,13 +80,13 @@ void Admin::addProduct() {
     cout << "Enter brand: "; getline(cin, brand);
     cout << "Enter description: "; getline(cin, description);
     cout << "Enter price: "; cin >> price;
-    cout << "Enter quantity: "; cin >> quantity;
+    //cout << "Enter quantity: "; cin >> quantity;
     cout << "Enter discount (%): "; cin >> discount;
     cout << "Enter GST (%): "; cin >> gst;
-    cout << "Enter reorder threshold: "; cin >> threshold;
+    //cout << "Enter reorder threshold: "; cin >> threshold;
 
     Product newProduct(id, name, category, brand, description,
-                       price, quantity, discount, gst, threshold);
+                       price,  discount, gst );
     inventory.addProduct(newProduct);
     inventory.saveToFile();
 
@@ -106,7 +106,7 @@ void Admin::deleteProduct() {
     }
 }
 
-void Admin::restockProduct() {
+/*void Admin::restockProduct() {
     int id, quantity;
     cout << "Enter Product ID to restock: ";
     cin >> id;
@@ -119,12 +119,12 @@ void Admin::restockProduct() {
     } else {
         cout << "Product not found.\n";
     }
-}
+}*/
 
-void Admin::viewLowStockAlerts() {
+/*void Admin::viewLowStockAlerts() {
     int threshold = 5;  // Default value, or take user input
-    inventory.showLowStock(threshold);  // ✅ fixed
-}
+    inventory.showLowStock(threshold);  // 
+}*/
 
 void Admin::viewCustomers() {
     ifstream file("data/customers.txt");

@@ -17,13 +17,19 @@ private:
 
 public:
     Warehouse();  // default constructor
-    Warehouse(std::string id, std::string address, std::string pin, std::string stat);
+    Warehouse(std::string id, std::string address, std::string pin, std::string stat); // parameterized
 
-    void registerWarehouse();                // 1. Register new warehouse
-    void deleteWarehouse(const std::string& id); // 3. Delete warehouse + file
-    void feedInventory();                    // 5. Add/modify inventory to warehouse file
+    void registerWarehouse();                      // Register new warehouse
+    void deleteWarehouse(const std::string& id);   // Delete warehouse and its file
+    void feedInventory();                          // Add/modify inventory to warehouse file
 
-    static void showAllWarehouses();         // utility to display all warehouses
+    static void showAllWarehouses();               // Display all warehouses
+
+    // Getters used by ProximityManager
+    std::string getID() const;
+    std::string getPincode() const;
+    std::string getAddress() const;
+    std::string getStatus() const;
 };
 
 #endif

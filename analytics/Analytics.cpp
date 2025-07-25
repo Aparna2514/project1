@@ -83,8 +83,8 @@ void generateSalesReport(const std::string& timeframe) {
 
     std::cout << " Sales Report (" << timeframe << "):\n";
     if (totalOrders == 0) {
-        std::cout << "⚠️  No orders found in the selected timeframe (" << timeframe << ").\n";
-        std::cout << "💡 Tip: Place a few test orders to see analytics in action.\n\n";
+        std::cout << "No orders found in the selected timeframe (" << timeframe << ").\n";
+        std::cout << " Tip: Place a few test orders to see analytics in action.\n\n";
         return;
     }
 
@@ -138,8 +138,8 @@ void showMostAndLeastOrderedProducts() {
     auto least = std::min_element(productCounts.begin(), productCounts.end(),
         [](auto& a, auto& b) { return a.second < b.second; });
 
-    std::cout << "🔥 Most Ordered Product: " << most->first << " (" << most->second << " units)\n";
-    std::cout << "🧊 Least Ordered Product: " << least->first << " (" << least->second << " units)\n\n";
+    std::cout << "Most Ordered Product: " << most->first << " (" << most->second << " units)\n";
+    std::cout << " Least Ordered Product: " << least->first << " (" << least->second << " units)\n\n";
 }
 
 void showCustomerOrderTrends() {
@@ -178,7 +178,7 @@ void showCustomerOrderTrends() {
         }
     }
 
-    std::cout << "👥 Customer Order Trends:\n";
+    std::cout << " Customer Order Trends:\n";
     for (const auto& [cid, totalQty] : customerOrders) {
         std::cout << "Customer ID " << cid << ": " << totalQty << " units ordered\n";
     }

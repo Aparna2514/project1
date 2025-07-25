@@ -4,19 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
-
-class Warehouse {
-private:
-    std::string warehouseID;
-    std::string address;
-    std::string pincode;
-
-public:
-    Warehouse(const std::string& id, const std::string& addr, const std::string& pin);
-    std::string getID() const;
-    std::string getPincode() const;
-    std::string getAddress() const;
-};
+#include "Warehouse.h"  // include the real Warehouse class
 
 class ProximityManager {
 private:

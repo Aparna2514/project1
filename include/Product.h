@@ -11,16 +11,16 @@ private:
     std::string brand;
     std::string description;
     double price;
-    int quantity;
+    //int quantity;
     double discountPercent;
     double gstPercent;
-    int reorderThreshold;
+    // int reorderThreshold;
 
 public:
     // Constructor
     Product(int id, const std::string& name, const std::string& category,
             const std::string& brand, const std::string& description,
-            double price, int quantity, double discount, double gst, int reorderThreshold);
+            double price, /*int quantity,*/ double discount, double gst /*int reorderThreshold*/);
 
     // Getters
     int getProductId() const;
@@ -29,10 +29,10 @@ public:
     std::string getBrand() const;
     std::string getDescription() const;
     double getPrice() const;
-    int getQuantity() const;
+    //int getQuantity() const;
     double getDiscountPercent() const;
     double getGstPercent() const;
-    int getReorderThreshold() const;
+    //int getReorderThreshold() const;
 
     // Setters
     void setName(const std::string&);
@@ -40,10 +40,10 @@ public:
     void setBrand(const std::string&);
     void setDescription(const std::string&);
     void setPrice(double);
-    void setQuantity(int);
+    //void setQuantity(int);
     void setDiscountPercent(double);
     void setGstPercent(double);
-    void setReorderThreshold(int);
+    // void setReorderThreshold(int);
 
     // Display
     void displayProduct() const;

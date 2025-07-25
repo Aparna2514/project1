@@ -2,32 +2,31 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-#include <cmath>
+#include <map>
+#include <iostream>
 
-Warehouse::Warehouse(const std::string& id, const std::string& addr, const std::string& pin)
-    : warehouseID(id), address(addr), pincode(pin) {}
+using namespace std;
 
-std::string Warehouse::getID() const { return warehouseID; }
-std::string Warehouse::getPincode() const { return pincode; }
-std::string Warehouse::getAddress() const { return address; }
-
-void ProximityManager::loadWarehouses(const std::string& filename) {
-    std::ifstream file(filename);
-    std::string line;
+void ProximityManager::loadWarehouses(const string& filename) {
+    ifstream file(filename);
+    string line;
 
     while (getline(file, line)) {
-        std::stringstream ss(line);
-        std::string id, addr, pin;
+        stringstream ss(line);
+        string id, addr, pin, status;
 
         getline(ss, id, ',');
         getline(ss, addr, ',');
         getline(ss, pin, ',');
+        getline(ss, status, ',');
 
-        warehouses.emplace_back(id, addr, pin);
+        if (status == "Active") {
+            warehouses.emplace_back(id, addr, pin, status);  // uses real Warehouse constructor
+        }
     }
 }
 
-int ProximityManager::hammingDistance(const std::string& a, const std::string& b) const {
+int ProximityManager::hammingDistance(const string& a, const string& b) const {
     if (a.length() != b.length()) return 999;
     int dist = 0;
     for (size_t i = 0; i < a.length(); ++i) {
@@ -36,17 +35,19 @@ int ProximityManager::hammingDistance(const std::string& a, const std::string& b
     return dist;
 }
 
-bool ProximityManager::checkAvailability(const std::string& warehouseID, const std::map<std::string, int>& productQtyMap) {
-    std::ifstream file("data/warehouse_" + warehouseID + ".txt");
-    std::map<std::string, int> inventory;
-    std::string line;
+bool ProximityManager::checkAvailability(const string& warehouseID, const map<string, int>& productQtyMap) {
+    ifstream file("data/warehouse_" + warehouseID + ".txt");
+    map<string, int> inventory;
+    string line;
 
     while (getline(file, line)) {
-        std::stringstream ss(line);
-        std::string productID, qtyStr;
+        stringstream ss(line);
+        string productID, name, qtyStr, priceStr;
         getline(ss, productID, ',');
+        getline(ss, name, ',');
         getline(ss, qtyStr, ',');
-        inventory[productID] = std::stoi(qtyStr);
+        getline(ss, priceStr, ',');
+        inventory[productID] = stoi(qtyStr);
     }
 
     for (const auto& item : productQtyMap) {
@@ -56,7 +57,7 @@ bool ProximityManager::checkAvailability(const std::string& warehouseID, const s
     return true;
 }
 
-std::string ProximityManager::findBestWarehouse(const std::string& customerPincode, const std::map<std::string, int>& productQtyMap) {
+string ProximityManager::findBestWarehouse(const string& customerPincode, const map<string, int>& productQtyMap) {
     // Step 1: Exact Match
     for (const auto& wh : warehouses) {
         if (wh.getPincode() == customerPincode) {
@@ -74,13 +75,13 @@ std::string ProximityManager::findBestWarehouse(const std::string& customerPinco
     }
 
     // Step 3: Hamming Distance match
-    std::vector<std::pair<int, Warehouse>> distances;
+    vector<pair<int, Warehouse>> distances;
     for (const auto& wh : warehouses) {
         int dist = hammingDistance(customerPincode, wh.getPincode());
         distances.emplace_back(dist, wh);
     }
 
-    std::sort(distances.begin(), distances.end(), [](auto& a, auto& b) {
+    sort(distances.begin(), distances.end(), [](auto& a, auto& b) {
         return a.first < b.first;
     });
 
