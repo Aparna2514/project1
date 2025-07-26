@@ -106,7 +106,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     string bestWarehouseId = pm.findBestWarehouse(custPin, productQtyMap);
 
     if (bestWarehouseId == "NOT_FOUND") {
-        cout << "❌ No warehouse can fulfill the entire order.\n";
+        cout << " No warehouse can fulfill the entire order.\n";
         return Order();
     }
 
@@ -114,7 +114,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     string warehouseFile = "data/warehouse_" + bestWarehouseId + ".txt";
     ifstream wf(warehouseFile);
     if (!wf) {
-        cout << "❌ Warehouse data file not found.\n";
+        cout << " Warehouse data file not found.\n";
         return Order();
     }
 
@@ -170,7 +170,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
 
     newOrder.saveToFile("data/orders.txt", inventory);
 
-    cout << "✅ Order placed successfully from warehouse: " << bestWarehouseId << "\n";
+    cout << " Order placed successfully from warehouse: " << bestWarehouseId << "\n";
     cout << "Order ID: " << oid << "\n";
 
     return newOrder;
