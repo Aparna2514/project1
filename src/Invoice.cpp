@@ -6,6 +6,11 @@
 #include <sstream>
 
 void Invoice::generateInvoice(const Order& order, const Inventory& inventory, const Customer& customer) {
+    if (!order.isValid()) {
+        std::cout << "❌ Invoice not generated: Invalid or failed order.\n";
+        return;
+    }
+
     std::ostringstream filename;
     filename << "invoices/invoice_" << order.getOrderId() << ".txt";
     std::ofstream file(filename.str());
@@ -71,9 +76,8 @@ void Invoice::generateInvoice(const Order& order, const Inventory& inventory, co
     file.close();
 
     std::cout << "✅ Invoice generated: " << filename.str() << "\n";
-    //modified for default open
+
+    // Open invoice file in default viewer
     std::string openCommand = "start " + filename.str();
     system(openCommand.c_str());
-
 }
-

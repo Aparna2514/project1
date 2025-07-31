@@ -24,6 +24,14 @@ void Order::setCustomer(const Customer& customer) {
     this->customerId = customer.getCustomerId();
 }
 
+void Order::setMetadata(const std::string& warehouseId,
+                        const std::string& warehousePin,
+                        const std::string& customerPin) {
+    this->warehouseId = warehouseId;
+    this->warehousePincode = warehousePin;
+    this->customerPincode = customerPin;
+}
+
 double Order::getTotalAmount(const Inventory& inventory) const {
     double total = 0.0;
     for (const auto& item : items) {
@@ -40,6 +48,10 @@ double Order::getTotalAmount(const Inventory& inventory) const {
 
 int Order::generateOrderId() {
     return Utility::generateID();
+}
+
+bool Order::isValid() const {
+    return orderId != 0;
 }
 
 void Order::saveToFile(const string& filename, const Inventory& inventory) const {
@@ -93,6 +105,11 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
         cin >> more;
     }
 
+    if (orderItems.empty()) {
+        cout << " Order failed: No valid products selected.\n";
+        return Order();
+    }
+
     // Prepare productQtyMap for availability check
     map<string, int> productQtyMap;
     for (auto& item : orderItems) {
@@ -106,7 +123,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     string bestWarehouseId = pm.findBestWarehouse(custPin, productQtyMap);
 
     if (bestWarehouseId == "NOT_FOUND") {
-        cout << " No warehouse can fulfill the entire order.\n";
+        cout << "Order failed: No warehouse can fulfill the entire order.\n";
         return Order();
     }
 
@@ -114,7 +131,7 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     string warehouseFile = "data/warehouse_" + bestWarehouseId + ".txt";
     ifstream wf(warehouseFile);
     if (!wf) {
-        cout << " Warehouse data file not found.\n";
+        cout << " Order failed: Warehouse data file not found.\n";
         return Order();
     }
 
@@ -164,14 +181,11 @@ Order Order::placeOrder(const Customer& customer, Inventory& inventory) {
     // Prepare and save order
     int oid = generateOrderId();
     Order newOrder(oid, customer.getCustomerId(), Utility::getCurrentTimestamp(), orderItems);
-    newOrder.warehouseId = bestWarehouseId;
-    newOrder.warehousePincode = selectedWarehousePin;
-    newOrder.customerPincode = custPin;
-
+    newOrder.setMetadata(bestWarehouseId, selectedWarehousePin, custPin);
     newOrder.saveToFile("data/orders.txt", inventory);
 
     cout << " Order placed successfully from warehouse: " << bestWarehouseId << "\n";
-    cout << "Order ID: " << oid << "\n";
+    cout << " Order ID: " << oid << "\n";
 
     return newOrder;
 }

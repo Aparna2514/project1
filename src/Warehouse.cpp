@@ -103,7 +103,7 @@ void Warehouse::feedInventory() {
 
     string file = "data/warehouse_" + id + ".txt";
     if (!filesystem::exists(file)) {
-        cout << "❌ Warehouse file doesn't exist.\n";
+        cout << " Warehouse file doesn't exist.\n";
         return;
     }
 
@@ -113,7 +113,7 @@ void Warehouse::feedInventory() {
     cin >> prodID;
 
     if (!productExists(prodID)) {
-        cout << "❌ Product not found in central catalog.\n";
+        cout << " Product not found in central catalog.\n";
         return;
     }
 
@@ -150,13 +150,13 @@ void Warehouse::feedInventory() {
     remove(file.c_str());
     rename("data/temp.txt", file.c_str());
 
-    cout << "✅ Inventory updated for product " << prodID << " in warehouse " << id << ".\n";
+    cout << " Inventory updated for product " << prodID << " in warehouse " << id << ".\n";
 }
 
 void Warehouse::showAllWarehouses() {
     ifstream in("data/master_warehouse.txt");
     string line;
-    cout << "\n📦 Registered Warehouses:\n";
+    cout << "\n Registered Warehouses:\n";
     cout << "-------------------------------------------\n";
     while (getline(in, line)) {
         cout << line << endl;

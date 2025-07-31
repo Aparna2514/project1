@@ -31,6 +31,9 @@ public:
 
     // Setters
     void setCustomer(const Customer& customer);
+    void setMetadata(const std::string& warehouseId,
+                     const std::string& warehousePin,
+                     const std::string& customerPin);
 
     // Computation
     double getTotalAmount(const Inventory& inventory) const;
@@ -41,6 +44,9 @@ public:
     // Static
     static int generateOrderId();
     static Order placeOrder(const Customer& customer, Inventory& inventory);
+
+    // Validity check
+    bool isValid() const;
 };
 
 #endif // ORDER_H
